@@ -1,6 +1,6 @@
 {
   "name": "pi-opencode-auth",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Spoofs the OpenCode CLI identity for Pi's built-in opencode/opencode-go providers so Zen's free models work",
   "type": "module",
   "license": "MIT",
