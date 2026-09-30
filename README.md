@@ -15,10 +15,12 @@ Makes Pi's built-in **OpenCode Zen** (`opencode`) and **OpenCode Go** (`opencode
 | `x-opencode-session` | pi session uuid | `ses_` + descending ULID, stable per pi session |
 | `x-opencode-request` | *(absent)* | `msg_` + ascending ULID, per request |
 | `x-opencode-project` | *(absent)* | `global` |
-| Tools | user's active roster | roster + `bash` and `read` (Zen refuses requests without them) |
+| Tools | user's active roster | unchanged |
 | `Authorization` | configured/stored Zen key | unchanged when a key exists, `Bearer public` when there is none |
 
 Zen's gate checks the request, not the account: the same request with a real key and with the anonymous `public` bearer both pass once the fingerprint matches. The gate is also satisfied by pi's streaming request shape, which every agent turn uses.
+
+The extension never touches your tool roster. If you have deactivated `bash` or `read`, Zen may refuse the free model; that refusal is left to you rather than papered over by re-enabling tools you turned off.
 
 ## Install
 

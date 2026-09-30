@@ -19,13 +19,6 @@ export const ANONYMOUS_API_KEY = "public";
 export const CLI_USER_AGENT = "opencode/1.18.18";
 export const CLI_PROJECT_ID = "global";
 
-/** Zen's free tier also refuses requests whose tool list lacks these names. */
-export const REQUIRED_TOOL_NAMES = ["bash", "read"] as const;
-
-export function isZenProvider(provider: string | undefined): boolean {
-  return provider === ZEN_PROVIDER || provider?.startsWith("opencode-") === true;
-}
-
 function findHeader(headers: ProviderHeaders, name: string): string | undefined {
   return Object.keys(headers).find((key) => key.toLowerCase() === name);
 }
@@ -60,9 +53,4 @@ export function spoofOpenCodeHeaders(
   set("x-opencode-session", sessionId);
   set("x-opencode-request", createRequestId());
   return true;
-}
-
-/** Adds the tool names Zen's free tier demands, keeping the caller's order. */
-export function withRequiredTools(selected: readonly string[]): string[] {
-  return [...new Set([...selected, ...REQUIRED_TOOL_NAMES])];
 }

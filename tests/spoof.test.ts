@@ -3,11 +3,7 @@ import type { ProviderHeaders } from "@earendil-works/pi-ai";
 import {
   ANONYMOUS_API_KEY,
   CLI_USER_AGENT,
-  isZenProvider,
   spoofOpenCodeHeaders,
-  withRequiredTools,
-  ZEN_GO_PROVIDER,
-  ZEN_PROVIDER,
 } from "../src/spoof.ts";
 
 const PI_STAMP: ProviderHeaders = {
@@ -56,31 +52,5 @@ describe("spoofOpenCodeHeaders", () => {
     const headers: ProviderHeaders = { "x-opencode-client": "pi" };
     expect(spoofOpenCodeHeaders(headers, "ses_test")).toBe(true);
     expect(headers["x-opencode-session"]).toBe("ses_test");
-  });
-});
-
-describe("isZenProvider", () => {
-  test("matches the built-in Zen providers and nothing else", () => {
-    expect(isZenProvider(ZEN_PROVIDER)).toBe(true);
-    expect(isZenProvider(ZEN_GO_PROVIDER)).toBe(true);
-    expect(isZenProvider("opencode-free")).toBe(true);
-    expect(isZenProvider("anthropic")).toBe(false);
-    expect(isZenProvider(undefined)).toBe(false);
-  });
-});
-
-describe("withRequiredTools", () => {
-  test("adds the tool names Zen's free tier requires", () => {
-    expect(withRequiredTools(["read", "edit"])).toEqual(["read", "edit", "bash"]);
-  });
-
-  test("keeps order and does not duplicate names", () => {
-    expect(withRequiredTools(["bash", "write", "read"])).toEqual(["bash", "write", "read"]);
-  });
-
-  test("does not mutate the caller's list", () => {
-    const selected = ["write"];
-    withRequiredTools(selected);
-    expect(selected).toEqual(["write"]);
   });
 });

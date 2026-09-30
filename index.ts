@@ -2,9 +2,7 @@ import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 import { createSessionId } from "./src/identifier.ts";
 import {
   ANONYMOUS_API_KEY,
-  isZenProvider,
   spoofOpenCodeHeaders,
-  withRequiredTools,
   ZEN_GO_PROVIDER,
   ZEN_PROVIDER,
 } from "./src/spoof.ts";
@@ -36,12 +34,5 @@ export default function opencodeAuth(pi: ExtensionAPI): void {
 
   pi.on("before_provider_headers", (event) => {
     spoofOpenCodeHeaders(event.headers, sessionId);
-  });
-
-  pi.on("before_agent_start", (event, ctx) => {
-    if (!isZenProvider(ctx.model?.provider)) return;
-    event.systemPromptOptions.selectedTools = withRequiredTools(
-      event.systemPromptOptions.selectedTools,
-    );
   });
 }
